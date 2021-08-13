@@ -121,7 +121,7 @@ METHOD=active_search
 cd src/eval/build
 cmake -DCMAKE_BUILD_TYPE=Release .. && make -j8
 
-./eval $DATA $DATA/predictions/$METHOD.txt errors/$METHOD.txt
+./eval $DATA $DATA/predictions/$METHOD.txt $DATA/errors/$METHOD.txt
 ```
 
 This generates an output error file in the following format:
