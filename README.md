@@ -66,7 +66,9 @@ Poses `*.pose.txt` of the test (rescan) sequences are aligned with the train (re
 
 The corresponding camera calibration parameters (`fx, fy, cx, cy`) can be found here: [intrinsics.txt](data/intrinsics.txt).
 
-Scene stats are available here: [stats.txt](data/stats.txt) and are structured as follows:
+We also provide our dataset in [kapture](https://github.com/naver/kapture) format. Examples of visual localization pipelines with kapture can be found [here](https://github.com/naver/kapture-localization).
+
+Finally, scene stats are available here: [stats.txt](data/stats.txt) and are structured as follows:
 
 ```
 frame	NSSD	NCCOEFF	SemanticChange	GeometricChange	VoL	Context	PoseNovelity
@@ -119,7 +121,7 @@ METHOD=active_search
 cd src/eval/build
 cmake -DCMAKE_BUILD_TYPE=Release .. && make -j8
 
-./eval $DATA $DATA/predictions/$METHOD.txt errors/$METHOD.txt
+./eval $DATA $DATA/predictions/$METHOD.txt $DATA/errors/$METHOD.txt
 ```
 
 This generates an output error file in the following format:
