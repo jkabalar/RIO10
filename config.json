@@ -87,28 +87,57 @@
       "DenseVLAD_Top20":{
          "title":"DenseVLAD Top 20",
          "color":"#F7DC6F"
+      },
+      "kapture_r2d2":{
+         "title":"KaptureBaseline",
+         "color":"#A569BD"
+      },
+      "results_scene01_distance_metric":{
+         "title":"kapture_distance",
+         "color":"#FA4F0A"
+      }
+,
+      "kapture_top30_scene01":{
+         "title":"kapture_top30_scene01",
+         "color":"#2346fc"
+      },
+      "kapture_masked_scene01_20":{
+         "title":"kapture_masked_scene01_20",
+         "color":"#6D000a"
+      },
+      "result_topk30_scene01":{
+         "title":"result_topk30_scene01",
+         "color":"#FF2FAF"
+      },
+      "full_with_scene05_scene08_new":{
+         "title":"KaptureReranked",
+         "color":"#FA4F0A"
+      },
+      "full_result_reranking":{
+         "title":"KaptureUpperBound",
+         "color":"#bd6980"
       }
    },
    "change_corr":{
-      "filename":"",
+      "filename":"kapture_comp_change.svg",
       "methods":[
          "active_search",
          "grove_v1",
          "grove_v2",
          "d2_net",
-         "HFNet"
+         "full_reranked_validation",
+         "kapture_r2d2",
+"full_result_reranking"
       ],
       "stats_keys":[
-         "SemanticChange",
-         "GeometricChange",
-         "NSSD",
-         "NCCOEFF"
+         "VoL",
+         "Context",
+         "PoseNovelity"
       ],
       "axis_xlabel":[
-         "Semantic Difference",
-         "Depth Difference",
-         "Visual Difference",
-         "Normalized Correlation Coefficient"
+         "Field of View",
+         "Context",
+         "Pose Novelty"
       ],
       "axis_ylabel":"Correcty Localized",
       "axis_ylimit":[
@@ -117,86 +146,75 @@
       ],
       "axis_xlimit":[
          [
-            0.07,
-            0.7
+            0,
+            500
          ],
          [
-            40,
-            950
+            0.0,
+            34.0
          ],
          [
-            0.05,
-            0.8
-         ],
-         [
-            0.05,
-            0.8
+            0,
+            900
          ]
       ],
       "limits":[
          [
-            0.1,
-            0.45
+            50.0,
+            300
          ],
          [
-            150,
-            420
+            12,
+            18
          ],
          [
-            0.22,
-            0.66
-         ],
-         [
-            0.22,
-            0.66
+            300,
+            750
          ]
       ],
       "step":[
          [
             0.0,
-            1.0,
-            0.01
+            500.0,
+            10.0
          ],
          [
             0.0,
-            1500.0,
+            35.0,
+            1.0
+         ],
+         [
+            0.0,
+            1200,
             15.0
-         ],
-         [
-            0.0,
-            1.10,
-            0.011
-         ],
-         [
-            0.0,
-            1.10,
-            0.011
          ]
       ]
    },
    "overview":{
-      "filename":"",
+      "filename":"kapture_comparison_all.svg",
       "methods":[
          "active_search",
          "grove_v1",
          "grove_v2",
          "d2_net",
-         "HFNet"
+         "full_with_scene05_scene08_new",
+         "kapture_r2d2",
+"full_result_reranking"
       ],
       "bins":1000,
-      "y_max":0.7,
+      "y_max":0.9,
       "x_range":[
          [
             0,
             0.5
          ],
-         [
+		 [
             0,
             20
          ],
          [
             0,
-            0.25
+            0.20
          ]
       ],
       "y_limit_min":0.15,
