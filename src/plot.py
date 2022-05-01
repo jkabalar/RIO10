@@ -58,12 +58,12 @@ def print_table(config_json, methods_folder, save_to_file=False):
         pose_outlier = np.logical_or((errors[:,1] >= 25), (errors[:,0] >= 0.5)).sum() / len_gt
         delimiter = ";"
         if save_to_file:
-            t_file.write(config_json['methods'][file]['title'] + delimiter +  '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
+            t_file.write(config_json['methods'][file]['title'] + delimiter + + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) + delimiter+ '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
               ' {:.3}'.format(DCRE_5)  +delimiter+ '{:.3}'.format(DCRE_15)  +delimiter+ 
-              ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) +  "\n")
-        print(config_json['methods'][file]['title'] + ' \t & ' +
+              ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) +  "\n")
+        print(config_json['methods'][file]['title'] + ' \t & ' +  ' & {:.3}'.format(1 + DCRE_5 - DCRE_outlier) +
               '{:.4}'.format(pose_5) + ' & ({:.4}'.format(np.median(errors[:,0])) + ', {:.4}'.format(np.median(errors[:,1])) + ')' +
-              ' & {:.3}'.format(DCRE_5) + ' & ' + '{:.3}'.format(DCRE_15) + ' & {:.3}'.format(1 + DCRE_5 - DCRE_outlier) + '\\\\')
+              ' & {:.3}'.format(DCRE_5) + ' & ' + '{:.3}'.format(DCRE_15) + '\\\\')
         print(config_json['methods'][file]['title'] + ' \t & ' + ' & {:.3}'.format(1 - len(errors) / len_gt) + ' & {:.3}'.format(pose_outlier) + ' & {:.3}'.format(DCRE_outlier) +  '\\\\')
         f_file.close()
     if save_to_file:
@@ -128,8 +128,7 @@ def change_correlation(config_json, prediction_path):
                 continue
             errors[method][values[0]] = values[3]
         f_file.close()
-    fig = plt.figure(figsize=(13, 2.5))
-    axis = plt_utils.add_plots(fig, 3)
+    axis = plt_utils.add_plots(fig, 4)
     axis[0].set_ylabel(plot_config['axis_ylabel'])
     for ax in range(len(axis)):
         data = correlation_data(errors, methods, stats, header.index(plot_config['stats_keys'][ax]), plot_config['step'][ax], plot_config['limits'][ax])
@@ -140,9 +139,25 @@ def change_correlation(config_json, prediction_path):
             axis[ax].scatter(data[m][0], data[m][1], marker='.', color=config_json['methods'][m]['color'], zorder=3, s=data[m][2])
             axis[ax].plot(data[m][0], plt_utils.movingaverage(data[m][1], 10),'r--',linewidth=1.0, color=config_json['methods'][m]['color'], label=config_json['methods'][m]['title'])
         plt_utils.add_limit_2(axis[ax], plot_config['limits'][0], [data[m][3] for m in methods])
-    axis[2].legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    axis[3].legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     if plot_config["filename"] != '':
         plt.savefig(plot_config["filename"], dpi=200, bbox_inches='tight')
+    fig = plt.figure(figsize=(13, 2.5))
+    axis = plt_utils.add_plots(fig, 3)
+    axis[0].set_ylabel(plot_config['axis_ylabel'])
+    for ax in range(len(axis)):
+        offset = ax+4
+        data = correlation_data(errors, methods, stats, header.index(plot_config['stats_keys'][offset]), plot_config['step'][offset], plot_config['limits'][offset])
+        axis[ax].set_ylim(plot_config['axis_ylimit'])
+        axis[ax].set_xlabel(plot_config['axis_xlabel'][offset])
+        axis[ax].set_xlim(plot_config['axis_xlimit'][offset])
+        for m in methods:
+            axis[ax].scatter(data[m][0], data[m][1], marker='.', color=config_json['methods'][m]['color'], zorder=3, s=data[m][2])
+            axis[ax].plot(data[m][0], plt_utils.movingaverage(data[m][1], 10),'r--',linewidth=1.0, color=config_json['methods'][m]['color'], label=config_json['methods'][m]['title'])
+        plt_utils.add_limit_2(axis[ax], plot_config['limits'][0], [data[m][3] for m in methods])
+    axis[2].legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
+    if plot_config["filename"] != '':
+        plt.savefig("second_"+plot_config["filename"], dpi=200, bbox_inches='tight')
     plt.show()
 
 
