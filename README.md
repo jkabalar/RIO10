@@ -118,7 +118,9 @@ To compute the pose errors run the code as follows:
 DATA=../../../data
 METHOD=active_search
 
-cd src/eval/build
+cd src/eval
+mkdir build
+cd build
 cmake -DCMAKE_BUILD_TYPE=Release .. && make -j8
 
 ./eval $DATA $DATA/predictions/$METHOD.txt $DATA/errors/$METHOD.txt
