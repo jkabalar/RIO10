@@ -128,6 +128,7 @@ def change_correlation(config_json, prediction_path):
                 continue
             errors[method][values[0]] = values[3]
         f_file.close()
+    fig = plt.figure(figsize=(13, 2.5))
     axis = plt_utils.add_plots(fig, 4)
     axis[0].set_ylabel(plot_config['axis_ylabel'])
     for ax in range(len(axis)):
