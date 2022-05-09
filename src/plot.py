@@ -57,14 +57,14 @@ def print_table(config_json, methods_folder, save_to_file=False):
         pose_5 = np.logical_and((errors[:,1] < 5), (errors[:,0] < 0.05)).sum() / len_gt
         pose_outlier = np.logical_or((errors[:,1] >= 25), (errors[:,0] >= 0.5)).sum() / len_gt
         delimiter = ";"
-        if save_to_file:
-            t_file.write(config_json['methods'][file]['title'] + delimiter + + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) + delimiter+ '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
-              ' {:.3}'.format(DCRE_5)  +delimiter+ '{:.3}'.format(DCRE_15)  +delimiter+ 
-              ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) +  "\n")
         print(config_json['methods'][file]['title'] + ' \t & ' +  ' & {:.3}'.format(1 + DCRE_5 - DCRE_outlier) +
               '{:.4}'.format(pose_5) + ' & ({:.4}'.format(np.median(errors[:,0])) + ', {:.4}'.format(np.median(errors[:,1])) + ')' +
               ' & {:.3}'.format(DCRE_5) + ' & ' + '{:.3}'.format(DCRE_15) + '\\\\')
         print(config_json['methods'][file]['title'] + ' \t & ' + ' & {:.3}'.format(1 - len(errors) / len_gt) + ' & {:.3}'.format(pose_outlier) + ' & {:.3}'.format(DCRE_outlier) +  '\\\\')
+        if save_to_file:
+            t_file.write(config_json['methods'][file]['title'] + delimiter + + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) + delimiter+ '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
+              ' {:.3}'.format(DCRE_5)  +delimiter+ '{:.3}'.format(DCRE_15)  +delimiter+ ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) +  "\n")
+        
         f_file.close()
     if save_to_file:
         t_file.close()
