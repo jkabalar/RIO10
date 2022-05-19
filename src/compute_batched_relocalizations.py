@@ -27,13 +27,13 @@ def load_sequence(in_file: Path) -> List[np.ndarray]:
     """
     result = []
 
-    with open(in_file, "r") as f:
+    with open(in_file, "r", errors='ignore') as f:
         for line in f:
             chunks = line.split()
             assert len(chunks) == 8  # relative path + quat + trans
             guid = chunks[0].split("/")[0]
             frame_idx = int(chunks[0].split("-")[-1])
-            assert guid == in_file.stem
+            #assert guid == in_file.stem
 
             if len(result) < frame_idx:
                 _logger.warning(
@@ -194,7 +194,7 @@ def blend_poses(poses: Sequence[np.ndarray]) -> np.ndarray:
     :param poses: A list of poses to blend.
     :return: The result of DQB applied on the input poses.
     """
-    dq = DualQuaternion.from_dq_array([0, 0, 0, 0, 0, 0, 0])
+    dq = DualQuaternion.from_dq_array([0, 0, 0, 0, 0, 0, 0, 0])
 
     # We use a constant weight for all poses.
     weight = 1.0 / len(poses)
@@ -387,6 +387,8 @@ if __name__ == "__main__":
     # Load poses.
     gt_poses = load_sequence(gt_file)
     reloc_poses = load_sequence(reloc_file)
+    print(len(gt_poses))
+    print(len(reloc_poses))
     assert len(gt_poses) == len(reloc_poses)
 
     # Process the sequence

@@ -15,6 +15,7 @@ if [[ ! -d "data/predictions" ]]; then
 	fi
 	unzip data/predictions/predictions.zip -d data/predictions
 	rm data/predictions/predictions.zip
+
 fi
 
 if [[ ! -f "data/seq10" ]]; then
