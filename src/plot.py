@@ -40,32 +40,32 @@ def print_table(config_json, methods_folder, save_to_file=False):
     methods = {}
     if save_to_file:
         t_file = open("resultsLatexTable.txt", "w")
-
-    for file in methods_list:
-        f_file = open(os.path.join(methods_folder, file + '.txt'), 'r')
-        errors = []
-        for line in f_file:
-            values = line.rstrip().split()
-            is_test = not values[0].split('/')[0] in metadata['val']
-            if is_test:
-                continue
-            errors.append([float(values[1]), float(values[2]), float(values[3])])
-        errors = np.array(errors, dtype=np.float32)
-        DCRE_outlier = (errors[:,2] >= 0.5).sum() / len_gt
-        DCRE_5 = (errors[:,2] < 0.05).sum() / len_gt
-        DCRE_15 = (errors[:,2] < 0.15).sum() / len_gt
-        pose_5 = np.logical_and((errors[:,1] < 5), (errors[:,0] < 0.05)).sum() / len_gt
-        pose_outlier = np.logical_or((errors[:,1] >= 25), (errors[:,0] >= 0.5)).sum() / len_gt
-        delimiter = ";"
-        print(config_json['methods'][file]['title'] + ' \t & ' +  ' & {:.3}'.format(1 + DCRE_5 - DCRE_outlier) +
-              '{:.4}'.format(pose_5) + ' & ({:.4}'.format(np.median(errors[:,0])) + ', {:.4}'.format(np.median(errors[:,1])) + ')' +
-              ' & {:.3}'.format(DCRE_5) + ' & ' + '{:.3}'.format(DCRE_15) + '\\\\')
-        print(config_json['methods'][file]['title'] + ' \t & ' + ' & {:.3}'.format(1 - len(errors) / len_gt) + ' & {:.3}'.format(pose_outlier) + ' & {:.3}'.format(DCRE_outlier) +  '\\\\')
-        if save_to_file:
-            t_file.write(config_json['methods'][file]['title'] + delimiter + + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) + delimiter+ '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
-              ' {:.3}'.format(DCRE_5)  +delimiter+ '{:.3}'.format(DCRE_15)  +delimiter+ ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) +  "\n")
-        
-        f_file.close()
+    for printeverysceneiteratior in range(11):
+        for file in methods_list:
+            f_file = open(os.path.join(methods_folder, file + '.txt'), 'r')
+            errors = []
+            for line in f_file:
+                values = line.rstrip().split()
+                is_test = not values[0].split('/')[0] in metadata['val'][printeverysceneiteratior]
+                if is_test:
+                    continue
+                errors.append([float(values[1]), float(values[2]), float(values[3])])
+            errors = np.array(errors, dtype=np.float32)
+            DCRE_outlier = (errors[:,2] >= 0.5).sum() / len_gt
+            DCRE_5 = (errors[:,2] < 0.05).sum() / len_gt
+            DCRE_15 = (errors[:,2] < 0.15).sum() / len_gt
+            pose_5 = np.logical_and((errors[:,1] < 5), (errors[:,0] < 0.05)).sum() / len_gt
+            pose_outlier = np.logical_or((errors[:,1] >= 25), (errors[:,0] >= 0.5)).sum() / len_gt
+            delimiter = ";"
+            print(config_json['methods'][file]['title'] + ' \t & ' +  ' & {:.3}'.format(1 + DCRE_5 - DCRE_outlier) +
+                '{:.4}'.format(pose_5) + ' & ({:.4}'.format(np.median(errors[:,0])) + ', {:.4}'.format(np.median(errors[:,1])) + ')' +
+                ' & {:.3}'.format(DCRE_5) + ' & ' + '{:.3}'.format(DCRE_15) + '\\\\')
+            print(config_json['methods'][file]['title'] + ' \t & ' + ' & {:.3}'.format(1 - len(errors) / len_gt) + ' & {:.3}'.format(pose_outlier) + ' & {:.3}'.format(DCRE_outlier) +  '\\\\')
+            if save_to_file:
+                t_file.write(config_json['methods'][file]['title'] + delimiter + + '{:.3}'.format(1 + DCRE_5 - DCRE_outlier) + delimiter+ '{:.4}'.format(pose_5) +delimiter+  ' ({:.4}'.format(np.median(errors[:,0]))  +delimiter+  ', {:.4}'.format(np.median(errors[:,1])) + ')'  +delimiter+ 
+                ' {:.3}'.format(DCRE_5)  +delimiter+ '{:.3}'.format(DCRE_15)  +delimiter+ ' {:.3}'.format(1 - len(errors) / len_gt)  +delimiter+  ' {:.3}'.format(pose_outlier) +delimiter+  ' {:.3}'.format(DCRE_outlier) +  "\n")
+            
+            f_file.close()
     if save_to_file:
         t_file.close()
 
