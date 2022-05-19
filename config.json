@@ -89,17 +89,16 @@
          "color":"#F7DC6F"
       },
       "kapture_r2d2":{
-         "title":"KaptureBaseline",
+         "title":"KaptureTOPK20",
          "color":"#A569BD"
       },
       "results_scene01_distance_metric":{
-         "title":"kapture_distance",
-         "color":"#FA4F0A"
-      }
-,
-      "kapture_top30_scene01":{
-         "title":"kapture_top30_scene01",
+         "title":"KaptureDistance",
          "color":"#2346fc"
+      },
+      "full_result_top30k_validation":{
+         "title":"KaptureTOPK30",
+         "color":"#FA4F0A"
       },
       "kapture_masked_scene01_20":{
          "title":"kapture_masked_scene01_20",
@@ -109,11 +108,15 @@
          "title":"result_topk30_scene01",
          "color":"#FF2FAF"
       },
-      "full_with_scene05_scene08_new":{
+      "full_reranked_validation":{
          "title":"KaptureReranked",
          "color":"#FA4F0A"
       },
-      "full_result_reranking":{
+      "full_verification_validation_results":{
+         "title":"KaptureReranked+Matches",
+         "color":"#2346fc"
+      },
+      "full_result_reranking_GT":{
          "title":"KaptureUpperBound",
          "color":"#bd6980"
       }
@@ -124,9 +127,10 @@
          "active_search",
          "grove_v2",
          "d2_net",
-         "full_reranked_validation",
-         "kapture_r2d2",
-         "full_result_reranking"
+	 "kapture_r2d2",
+"full_verification_validation_results",
+         "full_result_reranking_GT",
+	 "full_reranked_validation"
       ],
       "stats_keys":[
          "SemanticChange",
@@ -255,9 +259,10 @@
          "active_search",
          "grove_v2",
          "d2_net",
-         "full_with_scene05_scene08_new",
-         "kapture_r2d2",
-         "full_result_reranking"
+	 "kapture_r2d2",
+         "full_result_reranking_GT",
+"full_reranked_validation",
+	 "full_verification_validation_results"
       ],
       "bins":1000,
       "y_max":0.9,

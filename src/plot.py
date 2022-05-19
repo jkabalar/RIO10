@@ -214,7 +214,7 @@ def overview(config_json, histogram_folder):
     ax4.legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     if config_json["overview"]["filename"] != '':
         plt.savefig(config_json["overview"]["filename"], dpi=200, bbox_inches='tight')
-    #plt.show()
+    plt.show()
 
 
 def load_config(filename):
@@ -245,6 +245,6 @@ if __name__ == "__main__":
     if (args.type == 1):
         overview(config_json, prediction_path)
     elif (args.type == 2):
-        print_table(config_json, prediction_path, True)
+        print_table(config_json, prediction_path)
     elif (args.type == 3):
         change_correlation(config_json, prediction_path)

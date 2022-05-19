@@ -101,6 +101,7 @@ class EvaluationServer {
                     const float rot_error = QuaternionAngularError(Eigen::Quaternionf(GT_pose.block<3,3>(0,0)), quaternion_pred);
                     const float DCRError = DCRE(intrinsics_map.at(seq_identifier), depth_path, GT_pose, predicted_pose);
                     file << identifier << " " << trans_error << " " << rot_error << " " << DCRError  << std::endl;
+
                 }
             }
         }

@@ -5,10 +5,12 @@ FIND_PACKAGE(OpenCV REQUIRED)
 FIND_PACKAGE(Eigen3 REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-function" )
-SET(CFLAGS_WARN "-Wall -Wextra -Wno-unused-parameter -Wno-strict-aliasing")
+SET(CFLAGS_WARN "-Wall -Wextra -Wno-unused-parameter -Wno-strict-aliasing -fopenmp")
 SET(CMAKE_CXX_FLAGS "-fPIC ${CFLAGS_WARN} ${CMAKE_CXX_FLAGS}")
 
 INCLUDE_DIRECTORIES(${EIGEN3_INCLUDE_DIR} ${OpenCV_INCLUDE_DIRS})
 
 ADD_EXECUTABLE(${PROJECT_NAME} main.cpp)
+ADD_EXECUTABLE(${PROJECT_NAME}_top1_corrected main_top1_corrected.cpp)
 TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${OpenCV_LIBS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME}_top1_corrected ${OpenCV_LIBS})
