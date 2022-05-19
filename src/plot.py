@@ -8,12 +8,12 @@ import plt_utils
 import matplotlib.pyplot as plt 
 from matplotlib.ticker import FuncFormatter
 
-def get_gt():
+def get_gt(scene_id):
     gt_size = 0
     f_file = open('data/stats.txt', 'r')
     f_file.readline().rstrip().split()
     for line in f_file:
-        if line.split('/')[0] in metadata["val"]:
+        if line.split('/')[0] in metadata["val"][scene_id]:
             gt_size += 1
     return gt_size
 
@@ -40,13 +40,15 @@ def print_table(config_json, methods_folder, save_to_file=False):
     methods = {}
     if save_to_file:
         t_file = open("resultsLatexTable.txt", "w")
-    for printeverysceneiteratior in range(11):
+    for printeverysceneiterator in range(10):
+        print("____________Scene 0{}_______________".format(printeverysceneiterator+1))
+        len_gt = get_gt(printeverysceneiterator)
         for file in methods_list:
             f_file = open(os.path.join(methods_folder, file + '.txt'), 'r')
             errors = []
             for line in f_file:
                 values = line.rstrip().split()
-                is_test = not values[0].split('/')[0] in metadata['val'][printeverysceneiteratior]
+                is_test = not values[0].split('/')[0] in metadata['val'][printeverysceneiterator]
                 if is_test:
                     continue
                 errors.append([float(values[1]), float(values[2]), float(values[3])])
