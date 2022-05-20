@@ -138,7 +138,7 @@ def change_correlation(config_json, prediction_path):
         for m in methods:
             axis[ax].scatter(data[m][0], data[m][1], marker='.', color=config_json['methods'][m]['color'], zorder=3, s=data[m][2])
             axis[ax].plot(data[m][0], plt_utils.movingaverage(data[m][1], 10),'r--',linewidth=1.0, color=config_json['methods'][m]['color'], label=config_json['methods'][m]['title'])
-        plt_utils.add_limit_2(axis[ax], plot_config['limits'][0], [data[m][3] for m in methods])
+        plt_utils.add_limit_2(axis[ax], plot_config['limits'][ax], [data[m][3] for m in methods])
     axis[3].legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     if plot_config["filename"] != '':
         plt.savefig(plot_config["filename"], dpi=200, bbox_inches='tight')
@@ -154,7 +154,7 @@ def change_correlation(config_json, prediction_path):
         for m in methods:
             axis[ax].scatter(data[m][0], data[m][1], marker='.', color=config_json['methods'][m]['color'], zorder=3, s=data[m][2])
             axis[ax].plot(data[m][0], plt_utils.movingaverage(data[m][1], 10),'r--',linewidth=1.0, color=config_json['methods'][m]['color'], label=config_json['methods'][m]['title'])
-        plt_utils.add_limit_2(axis[ax], plot_config['limits'][0][offset:], [data[m][3] for m in methods])
+        plt_utils.add_limit_2(axis[ax], plot_config['limits'][offset], [data[m][3] for m in methods])
     axis[2].legend(loc='center left', bbox_to_anchor=(1, 0.5), frameon=False)
     if plot_config["filename"] != '':
         plt.savefig("second_"+plot_config["filename"], dpi=200, bbox_inches='tight')
